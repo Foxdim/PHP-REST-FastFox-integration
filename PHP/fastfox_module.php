@@ -1,5 +1,5 @@
 <?php 
-class FastFox_Foxdim_Module {
+class Foxdim_FJWT_Fastfox_Module {
     private $KEY_ARR=[
         "PRIVATE_KEY"=>"",
         "PUBLIC_KEY"=>"",
@@ -20,6 +20,7 @@ class FastFox_Foxdim_Module {
         $FJWT=$this->FJWT_encode($PAYLOAD_ARR);
         $response_FJWT=$this->Api_Request($FJWT);
         $FJWT_decode=$this->FJWT_decode($response_FJWT);
+        
         return $FJWT_decode;
         
         
@@ -53,6 +54,18 @@ class FastFox_Foxdim_Module {
         $FJWT=$this->FJWT_encode($PAYLOAD_ARR);
         $response_FJWT=$this->Api_Request($FJWT);
         $FJWT_decode=$this->FJWT_decode($response_FJWT);
+        
+        echo($this->jsonEncode($PAYLOAD_ARR));
+        echo "<hr>";
+        echo($this->jsonEncode($this->FJWT_decode($FJWT))); //şifresiz
+        echo "<hr>";
+        echo($FJWT);//şifreli
+        echo "<hr><hr><hr>";
+        echo($response_FJWT);
+        echo "<hr>";
+        echo($this->jsonEncode($FJWT_decode));
+        echo "<hr>";die;
+        
         return $FJWT_decode;
         
     }
@@ -127,23 +140,25 @@ class FastFox_Foxdim_Module {
         return json_encode($text,JSON_UNESCAPED_UNICODE);
     }
     
-   function FJWT_encode($PAYLOAD_ARR)
+    function FJWT_encode($PAYLOAD_ARR)
     {
         $KEY_ARR=$this->KEY_ARR;
         $RETURN_ARR=$PAYLOAD_ARR;
+        if(!is_array($PAYLOAD_ARR["FJWT"]))$PAYLOAD_ARR["FJWT"]["PAYLOAD"]=$RETURN_ARR;
         $RETURN_ARR["FJWT"]["TOKEN"]=$this->encode($this->get_utc());
         $RETURN_ARR["FJWT"]["KEY"]=$KEY_ARR["PUBLIC_KEY"];
         $RETURN_ARR["FJWT"]["PAYLOAD"]=$this->encode($this->jsonEncode($PAYLOAD_ARR["FJWT"]["PAYLOAD"]));
         $PAYLOAD_ARR_JSON=$this->jsonEncode($RETURN_ARR);
         return $PAYLOAD_ARR_JSON;
     }
-    function FJWT_decode($FJWT_JSON)
+    function FJWT_decode($FJWT_ARR)
     {
         $KEY_ARR=$this->KEY_ARR;
-        $FJWT=$FJWT_JSON;
-        if(!is_array($FJWT))$FJWT=$this->jsonDecode($FJWT_JSON);
+        $FJWT=$FJWT_ARR;
+        if(!is_array($FJWT))$FJWT=$this->jsonDecode($FJWT_ARR);
         $PAYLOAD=$this->jsonDecode($this->decode($FJWT["FJWT"]["PAYLOAD"]));
         $FJWT["FJWT"]["PAYLOAD"]=$PAYLOAD;
+        $FJWT["FJWT"]["TOKEN_DECODE"]=$this->decode($FJWT["FJWT"]["TOKEN"]);
         return $FJWT;
     }
     
@@ -191,5 +206,6 @@ class FastFox_Foxdim_Module {
         $newstring = mb_convert_case($newstring, MB_CASE_LOWER, "UTF-8");
         return $newstring;
     }
+    
 }
 ?>
