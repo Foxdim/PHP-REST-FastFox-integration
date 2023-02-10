@@ -20,7 +20,6 @@ class Foxdim_FJWT_Fastfox_Module {
         $FJWT=$this->FJWT_encode($PAYLOAD_ARR);
         $response_FJWT=$this->Api_Request($FJWT);
         $FJWT_decode=$this->FJWT_decode($response_FJWT);
-        
         return $FJWT_decode;
         
         
@@ -54,18 +53,6 @@ class Foxdim_FJWT_Fastfox_Module {
         $FJWT=$this->FJWT_encode($PAYLOAD_ARR);
         $response_FJWT=$this->Api_Request($FJWT);
         $FJWT_decode=$this->FJWT_decode($response_FJWT);
-        
-        echo($this->jsonEncode($PAYLOAD_ARR));
-        echo "<hr>";
-        echo($this->jsonEncode($this->FJWT_decode($FJWT))); //şifresiz
-        echo "<hr>";
-        echo($FJWT);//şifreli
-        echo "<hr><hr><hr>";
-        echo($response_FJWT);
-        echo "<hr>";
-        echo($this->jsonEncode($FJWT_decode));
-        echo "<hr>";die;
-        
         return $FJWT_decode;
         
     }
