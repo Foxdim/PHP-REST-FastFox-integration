@@ -1,4 +1,5 @@
 <?php 
+include("fastfox_module.php");
 $API_INFORMATION_ARR=[ //DEFAULT VALUES=DEMO
     "PRIVATE_KEY"=>"1111111111111111",
     "PUBLIC_KEY"=>"2222222222222222",
