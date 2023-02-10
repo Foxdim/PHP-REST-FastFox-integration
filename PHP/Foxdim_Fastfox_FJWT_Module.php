@@ -1,9 +1,10 @@
 <?php 
-class Foxdim_Fastfox_FJWT_Module {
+class Foxdim_FJWT_Fastfox_Module {
     private $KEY_ARR=[
         "PRIVATE_KEY"=>"",
         "PUBLIC_KEY"=>"",
-        "API_URL"=>""
+        "API_URL"=>"",
+        "EXPIRED_SEC"=>300,
     ];
    
     function __construct($arr) {
@@ -18,11 +19,20 @@ class Foxdim_Fastfox_FJWT_Module {
         $KEY_ARR=$this->KEY_ARR;
         $PAYLOAD_ARR=["FJWT"=>["PAYLOAD"=>["REQUEST"=>"test_connection"]]];
         $FJWT=$this->FJWT_encode($PAYLOAD_ARR);
-        $response_FJWT=$this->Api_Request($FJWT);
+        $response_FJWT=$this->Api_Request($KEY_ARR["API_URL"],$FJWT);
         $FJWT_decode=$this->FJWT_decode($response_FJWT);
+        /*echo($this->jsonEncode($PAYLOAD_ARR));
+        echo "<hr>";
+        echo($this->jsonEncode($this->FJWT_decode($FJWT))); //şifresiz
+        echo "<hr>";
+        echo($FJWT);//şifreli
+        echo "<hr><hr><hr>";
+        echo($response_FJWT);
+        echo "<hr>";
+        echo($this->jsonEncode($FJWT_decode));
+        echo "<hr>";die;*/
+        
         return $FJWT_decode;
-        
-        
     }
     
     
@@ -31,7 +41,7 @@ class Foxdim_Fastfox_FJWT_Module {
         $KEY_ARR=$this->KEY_ARR;
         $PAYLOAD_ARR=["FJWT"=>["PAYLOAD"=>["REQUEST"=>"show_packages","BARCODES"=>$barcodes]]];
         $FJWT=$this->FJWT_encode($PAYLOAD_ARR);
-        $response_FJWT=$this->Api_Request($FJWT);
+        $response_FJWT=$this->Api_Request($KEY_ARR["API_URL"],$FJWT);
         $FJWT_decode=$this->FJWT_decode($response_FJWT);
         return $FJWT_decode;
     }
@@ -41,7 +51,7 @@ class Foxdim_Fastfox_FJWT_Module {
         $KEY_ARR=$this->KEY_ARR;
         $PAYLOAD_ARR=["FJWT"=>["PAYLOAD"=>["REQUEST"=>"show_last_packages","LIMIT"=>$limit]]];
         $FJWT=$this->FJWT_encode($PAYLOAD_ARR);
-        $response_FJWT=$this->Api_Request($FJWT);
+        $response_FJWT=$this->Api_Request($KEY_ARR["API_URL"],$FJWT);
         $FJWT_decode=$this->FJWT_decode($response_FJWT);
         return $FJWT_decode;
     }
@@ -51,7 +61,7 @@ class Foxdim_Fastfox_FJWT_Module {
         $KEY_ARR=$this->KEY_ARR;
         $PAYLOAD_ARR=["FJWT"=>["PAYLOAD"=>["REQUEST"=>"create_package","PACKAGE"=>$package_arr]]];
         $FJWT=$this->FJWT_encode($PAYLOAD_ARR);
-        $response_FJWT=$this->Api_Request($FJWT);
+        $response_FJWT=$this->Api_Request($KEY_ARR["API_URL"],$FJWT);
         $FJWT_decode=$this->FJWT_decode($response_FJWT);
         return $FJWT_decode;
         
@@ -61,7 +71,7 @@ class Foxdim_Fastfox_FJWT_Module {
         $KEY_ARR=$this->KEY_ARR;
         $PAYLOAD_ARR=["FJWT"=>["PAYLOAD"=>["REQUEST"=>"delete_packages","BARCODES"=>$barcodes]]];
         $FJWT=$this->FJWT_encode($PAYLOAD_ARR);
-        $response_FJWT=$this->Api_Request($FJWT);
+        $response_FJWT=$this->Api_Request($KEY_ARR["API_URL"],$FJWT);
         $FJWT_decode=$this->FJWT_decode($response_FJWT);
         return $FJWT_decode;
     }
@@ -74,40 +84,56 @@ class Foxdim_Fastfox_FJWT_Module {
     return $dt->format($format);
     }
     
-    function Api_Request($PostParams=null)
+    function Api_Request($url,$PostParams=null,$header=null)
     {
     $headers = [
         'User-Agent: FASTFOX-API',
         'Content-Type: application/json;charset=utf-8'
     ];
+    if($header!=null)
+    {
+        $headers=$header;
+    }
     
-    $ch = curl_init($this->KEY_ARR["API_URL"]);
+     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10 );
-    curl_setopt($ch, CURLOPT_TIMEOUT, 30 );
-    curl_setopt($ch, CURLOPT_MAXREDIRS, 10 );
-
+    curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 10 );
+    curl_setopt( $ch, CURLOPT_TIMEOUT, 30 );
+    curl_setopt( $ch, CURLOPT_MAXREDIRS, 10 );
+    
     if($PostParams!=null){
     curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $PostParams);//http_build_query
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $PostParams);
     }
+    
     $output = curl_exec($ch)??"";
-    $httpcode = curl_getINFO($ch, CURLINFO_HTTP_CODE)??"500";
-    $contentType = curl_getINFO($ch, CURLINFO_CONTENT_TYPE)??"text/html; charset=UTF-8";
+    $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE)??"500";
+    $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE)??"text/html; charset=UTF-8";
     curl_close($ch); 
-   
-    if($httpcode=="200")
+       
+        
+     if($httpcode=="200")
     {
         return $output;
     }
     $return_arr=["STATUS"=>"FAIL"];
     return $return_arr;
-
+    }
+   
+   function HOOK_FJWT_POST()
+    {
+      $POST_ARG_ORG=file_get_contents('php://input');
+      $POST_ARG=$this->jsonDecode($POST_ARG_ORG);
+      return $POST_ARG;
+    }
+    function update_keys($arr) {
+       $this->KEY_ARR["PRIVATE_KEY"]=$arr["PRIVATE_KEY"];
+       $this->KEY_ARR["PUBLIC_KEY"]=$arr["PUBLIC_KEY"];
     }
     
      function b64Encode($text)
@@ -145,7 +171,13 @@ class Foxdim_Fastfox_FJWT_Module {
         if(!is_array($FJWT))$FJWT=$this->jsonDecode($FJWT_ARR);
         $PAYLOAD=$this->jsonDecode($this->decode($FJWT["FJWT"]["PAYLOAD"]));
         $FJWT["FJWT"]["PAYLOAD"]=$PAYLOAD;
-        $FJWT["FJWT"]["TOKEN_DECODE"]=$this->decode($FJWT["FJWT"]["TOKEN"]);
+        
+        $TOKEN_DATE=strtotime($this->decode($FJWT["FJWT"]["TOKEN"])??0);
+        $CURRENT_DATE=strtotime($this->get_utc());
+        $EXPIRED_time=(($TOKEN_DATE+$KEY_ARR["EXPIRED_SEC"])-$CURRENT_DATE);
+        
+        if($EXPIRED_time<=0)$FJWT["FJWT"]["EXPIRED"]="1";
+        else $FJWT["FJWT"]["EXPIRED"]="0";
         return $FJWT;
     }
     
