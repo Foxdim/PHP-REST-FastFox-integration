@@ -1,5 +1,5 @@
 <?php 
-class Foxdim_FJWT_Fastfox_Module {
+class Foxdim_Fastfox_FJWT_Module {
     private $KEY_ARR=[
         "PRIVATE_KEY"=>"",
         "PUBLIC_KEY"=>"",
