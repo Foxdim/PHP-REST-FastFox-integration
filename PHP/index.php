@@ -4,7 +4,7 @@ $API_INFORMATION_ARR=[ //DEFAULT VALUES=DEMO
     "PUBLIC_KEY"=>"2222222222222222",
     "API_URL"=>"https://fastfoxdemo.foxdim.com/Apps/1/PublicApi/Firma/Rest/Api.php",
     ];
-$FJWT_Module = new Foxdim_FJWT_Fastfox_Module($API_INFORMATION_ARR);
+$FPJA_Module = new FPJA($API_INFORMATION_ARR);
 
 $process=$_GET["process"]??"test_connection";
 //$process="show_packages";
@@ -15,19 +15,19 @@ $process=$_GET["process"]??"test_connection";
 switch ($process) {
     case 'test_connection':
         echo "<h3>Connection Test</h3>";
-        $testconnection=$FJWT_Module->test_connection();
+        $testconnection=$FPJA_Module->test_connection();
         print_r($testconnection);die;
         break;
         
         case 'show_packages':
         echo "<h3>List Packages for barcodes</h3>";
-        $get_packages=$FJWT_Module->show_packages("924819810384");
+        $get_packages=$FPJA_Module->show_packages("924819810384");
         print_r($get_packages);die;
         break;
         
         case 'show_last_packages':
         echo "<h3>List Last Packages </h3>"; 
-        $get_last_packages=$FJWT_Module->show_last_packages(1);
+        $get_last_packages=$FPJA_Module->show_last_packages(1);
         print_r($get_last_packages);die;
         break;
         
@@ -63,13 +63,13 @@ switch ($process) {
             "payment_type"=>"1",//1=Credit card | 2=Cash payment | 3=Without payment
             "cargo_type"=>"1",  //1=Sender pay  | 2=Buyer pay
             ];
-        $created_package=$FJWT_Module->create_package($package_arr);
+        $created_package=$FPJA_Module->create_package($package_arr);
         print_r($created_package);die;
         break;
         
         case 'delete_packages':
         echo "<h3>Delete Packages for barcodes</h3>";
-        $delete_packages=$FJWT_Module->delete_packages("567256076322");
+        $delete_packages=$FPJA_Module->delete_packages("567256076322");
         print_r($delete_packages);die;
         break;
         
