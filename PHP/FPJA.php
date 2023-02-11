@@ -21,7 +21,7 @@ class FPJA {
         $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
         $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
         $FPJA_decode=$this->FPJA_decode($response_FPJA);
-        echo($this->jsonEncode($PAYLOAD_ARR));
+       /* echo($this->jsonEncode($PAYLOAD_ARR));
         echo "<hr>";
         echo($this->jsonEncode($this->FPJA_decode($FPJA))); //şifresiz
         echo "<hr>";
@@ -30,7 +30,7 @@ class FPJA {
         echo($response_FPJA);
         echo "<hr>";
         echo($this->jsonEncode($FPJA_decode));
-        echo "<hr>";die;
+        echo "<hr>";die;*/
         
         return $FPJA_decode;
     }
