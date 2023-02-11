@@ -1,5 +1,5 @@
 <?php 
-include_once("FJPA.php");
+include_once("FPJA_Module.php");
 $API_INFORMATION_ARR=[ //DEFAULT VALUES=DEMO
     "PRIVATE_KEY"=>"1111111111111111",
     "PUBLIC_KEY"=>"2222222222222222",
