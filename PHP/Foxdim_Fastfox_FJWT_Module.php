@@ -1,5 +1,5 @@
 <?php 
-class Foxdim_FJWT_Fastfox_Module {
+class FPJA {
     private $KEY_ARR=[
         "PRIVATE_KEY"=>"",
         "PUBLIC_KEY"=>"",
@@ -17,63 +17,63 @@ class Foxdim_FJWT_Fastfox_Module {
     function test_connection()
     {
         $KEY_ARR=$this->KEY_ARR;
-        $PAYLOAD_ARR=["FJWT"=>["PAYLOAD"=>["REQUEST"=>"test_connection"]]];
-        $FJWT=$this->FJWT_encode($PAYLOAD_ARR);
-        $response_FJWT=$this->Api_Request($KEY_ARR["API_URL"],$FJWT);
-        $FJWT_decode=$this->FJWT_decode($response_FJWT);
-        /*echo($this->jsonEncode($PAYLOAD_ARR));
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"test_connection"]]];
+        $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
+        $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
+        $FPJA_decode=$this->FPJA_decode($response_FPJA);
+        echo($this->jsonEncode($PAYLOAD_ARR));
         echo "<hr>";
-        echo($this->jsonEncode($this->FJWT_decode($FJWT))); //şifresiz
+        echo($this->jsonEncode($this->FPJA_decode($FPJA))); //şifresiz
         echo "<hr>";
-        echo($FJWT);//şifreli
+        echo($FPJA);//şifreli
         echo "<hr><hr><hr>";
-        echo($response_FJWT);
+        echo($response_FPJA);
         echo "<hr>";
-        echo($this->jsonEncode($FJWT_decode));
-        echo "<hr>";die;*/
+        echo($this->jsonEncode($FPJA_decode));
+        echo "<hr>";die;
         
-        return $FJWT_decode;
+        return $FPJA_decode;
     }
     
     
     function show_packages($barcodes) //barcode1,barcode2,barcode3 vs vs.
     {
         $KEY_ARR=$this->KEY_ARR;
-        $PAYLOAD_ARR=["FJWT"=>["PAYLOAD"=>["REQUEST"=>"show_packages","BARCODES"=>$barcodes]]];
-        $FJWT=$this->FJWT_encode($PAYLOAD_ARR);
-        $response_FJWT=$this->Api_Request($KEY_ARR["API_URL"],$FJWT);
-        $FJWT_decode=$this->FJWT_decode($response_FJWT);
-        return $FJWT_decode;
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"show_packages","BARCODES"=>$barcodes]]];
+        $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
+        $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
+        $FPJA_decode=$this->FPJA_decode($response_FPJA);
+        return $FPJA_decode;
     }
     
     function show_last_packages($limit=5) //max 1000 packages
     {
         $KEY_ARR=$this->KEY_ARR;
-        $PAYLOAD_ARR=["FJWT"=>["PAYLOAD"=>["REQUEST"=>"show_last_packages","LIMIT"=>$limit]]];
-        $FJWT=$this->FJWT_encode($PAYLOAD_ARR);
-        $response_FJWT=$this->Api_Request($KEY_ARR["API_URL"],$FJWT);
-        $FJWT_decode=$this->FJWT_decode($response_FJWT);
-        return $FJWT_decode;
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"show_last_packages","LIMIT"=>$limit]]];
+        $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
+        $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
+        $FPJA_decode=$this->FPJA_decode($response_FPJA);
+        return $FPJA_decode;
     }
     function create_package($package_arr)
     {
         
         $KEY_ARR=$this->KEY_ARR;
-        $PAYLOAD_ARR=["FJWT"=>["PAYLOAD"=>["REQUEST"=>"create_package","PACKAGE"=>$package_arr]]];
-        $FJWT=$this->FJWT_encode($PAYLOAD_ARR);
-        $response_FJWT=$this->Api_Request($KEY_ARR["API_URL"],$FJWT);
-        $FJWT_decode=$this->FJWT_decode($response_FJWT);
-        return $FJWT_decode;
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"create_package","PACKAGE"=>$package_arr]]];
+        $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
+        $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
+        $FPJA_decode=$this->FPJA_decode($response_FPJA);
+        return $FPJA_decode;
         
     }
     function delete_packages($barcodes)
     {
         $KEY_ARR=$this->KEY_ARR;
-        $PAYLOAD_ARR=["FJWT"=>["PAYLOAD"=>["REQUEST"=>"delete_packages","BARCODES"=>$barcodes]]];
-        $FJWT=$this->FJWT_encode($PAYLOAD_ARR);
-        $response_FJWT=$this->Api_Request($KEY_ARR["API_URL"],$FJWT);
-        $FJWT_decode=$this->FJWT_decode($response_FJWT);
-        return $FJWT_decode;
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"delete_packages","BARCODES"=>$barcodes]]];
+        $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
+        $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
+        $FPJA_decode=$this->FPJA_decode($response_FPJA);
+        return $FPJA_decode;
     }
 
     
@@ -125,7 +125,7 @@ class Foxdim_FJWT_Fastfox_Module {
     return $return_arr;
     }
    
-   function HOOK_FJWT_POST()
+   function HOOK_FPJA_POST()
     {
       $POST_ARG_ORG=file_get_contents('php://input');
       $POST_ARG=$this->jsonDecode($POST_ARG_ORG);
@@ -153,32 +153,32 @@ class Foxdim_FJWT_Fastfox_Module {
         return json_encode($text,JSON_UNESCAPED_UNICODE);
     }
     
-    function FJWT_encode($PAYLOAD_ARR)
+    function FPJA_encode($PAYLOAD_ARR)
     {
         $KEY_ARR=$this->KEY_ARR;
         $RETURN_ARR=$PAYLOAD_ARR;
-        if(!is_array($PAYLOAD_ARR["FJWT"]))$PAYLOAD_ARR["FJWT"]["PAYLOAD"]=$RETURN_ARR;
-        $RETURN_ARR["FJWT"]["TOKEN"]=$this->encode($this->get_utc());
-        $RETURN_ARR["FJWT"]["KEY"]=$KEY_ARR["PUBLIC_KEY"];
-        $RETURN_ARR["FJWT"]["PAYLOAD"]=$this->encode($this->jsonEncode($PAYLOAD_ARR["FJWT"]["PAYLOAD"]));
+        if(!is_array($PAYLOAD_ARR["FPJA"]))$PAYLOAD_ARR["FPJA"]["PAYLOAD"]=$RETURN_ARR;
+        $RETURN_ARR["FPJA"]["TOKEN"]=$this->encode($this->get_utc());
+        $RETURN_ARR["FPJA"]["KEY"]=$KEY_ARR["PUBLIC_KEY"];
+        $RETURN_ARR["FPJA"]["PAYLOAD"]=$this->encode($this->jsonEncode($PAYLOAD_ARR["FPJA"]["PAYLOAD"]));
         $PAYLOAD_ARR_JSON=$this->jsonEncode($RETURN_ARR);
         return $PAYLOAD_ARR_JSON;
     }
-    function FJWT_decode($FJWT_ARR)
+    function FPJA_decode($FPJA_ARR)
     {
         $KEY_ARR=$this->KEY_ARR;
-        $FJWT=$FJWT_ARR;
-        if(!is_array($FJWT))$FJWT=$this->jsonDecode($FJWT_ARR);
-        $PAYLOAD=$this->jsonDecode($this->decode($FJWT["FJWT"]["PAYLOAD"]));
-        $FJWT["FJWT"]["PAYLOAD"]=$PAYLOAD;
+        $FPJA=$FPJA_ARR;
+        if(!is_array($FPJA))$FPJA=$this->jsonDecode($FPJA_ARR);
+        $PAYLOAD=$this->jsonDecode($this->decode($FPJA["FPJA"]["PAYLOAD"]));
+        $FPJA["FPJA"]["PAYLOAD"]=$PAYLOAD;
         
-        $TOKEN_DATE=strtotime($this->decode($FJWT["FJWT"]["TOKEN"])??0);
+        $TOKEN_DATE=strtotime($this->decode($FPJA["FPJA"]["TOKEN"])??0);
         $CURRENT_DATE=strtotime($this->get_utc());
         $EXPIRED_time=(($TOKEN_DATE+$KEY_ARR["EXPIRED_SEC"])-$CURRENT_DATE);
         
-        if($EXPIRED_time<=0)$FJWT["FJWT"]["EXPIRED"]="1";
-        else $FJWT["FJWT"]["EXPIRED"]="0";
-        return $FJWT;
+        if($EXPIRED_time<=0)$FPJA["FPJA"]["EXPIRED"]="1";
+        else $FPJA["FPJA"]["EXPIRED"]="0";
+        return $FPJA;
     }
     
     private $ciphering = "AES-128-CBC";
@@ -188,10 +188,7 @@ class Foxdim_FJWT_Fastfox_Module {
     	$ciphering=$this->ciphering;
         $PUBLIC_KEY=$KEY_ARR["PUBLIC_KEY"];
         $PRIVATE_KEY=$KEY_ARR["PRIVATE_KEY"];
-        $iv_length = openssl_cipher_iv_length($ciphering);
-        $encryption = openssl_encrypt($text, $ciphering,
-        $PUBLIC_KEY, 0, $PRIVATE_KEY);
-        return $encryption??null;
+        return openssl_encrypt($text, $ciphering, $PRIVATE_KEY, 0, $PUBLIC_KEY)??null;
     }
     
     function decode($text)
@@ -200,10 +197,7 @@ class Foxdim_FJWT_Fastfox_Module {
         $ciphering=$this->ciphering;
         $PUBLIC_KEY=$KEY_ARR["PUBLIC_KEY"];
         $PRIVATE_KEY=$KEY_ARR["PRIVATE_KEY"];
-        $iv_length = openssl_cipher_iv_length($ciphering);
-        $decryption=openssl_decrypt ($text, $ciphering, 
-        $PUBLIC_KEY, $options, $PRIVATE_KEY);
-        return $decryption??null;
+        return openssl_decrypt($text, 'aes-128-cbc', $PRIVATE_KEY, 0, $PUBLIC_KEY)??null;
     }
     
      function fox_toUpper($string)
@@ -225,6 +219,5 @@ class Foxdim_FJWT_Fastfox_Module {
         $newstring = mb_convert_case($newstring, MB_CASE_LOWER, "UTF-8");
         return $newstring;
     }
-    
 }
 ?>
