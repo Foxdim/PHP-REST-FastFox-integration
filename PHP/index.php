@@ -8,10 +8,13 @@ $API_INFORMATION_ARR=[ //DEFAULT VALUES=DEMO
 $FPJA_Module = new FPJA($API_INFORMATION_ARR);
 
 $process=$_GET["process"]??"test_connection";
+//$process="pid_show_packages";
+//$process="pid_delete_packages";
 //$process="show_packages";
 //$process="show_last_packages";
-//$process="create_package";
 //$process="delete_packages";
+//$process="create_package";
+
 
 switch ($process) {
     case 'test_connection':
