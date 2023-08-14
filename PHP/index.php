@@ -19,10 +19,28 @@ switch ($process) {
         $testconnection=$FPJA_Module->test_connection();
         print_r($testconnection);die;
         break;
+
+        case 'pid_show_packages':
+        echo "<h3>List Packages for barcodes</h3>";
+        $get_packages=$FPJA_Module->show_packages("0"); //pids your product ids. // 0 last package info
+        print_r($get_packages);die;
+        break;
+
+        case 'pid_delete_packages':
+        echo "<h3>List Packages for barcodes</h3>";
+        $get_packages=$FPJA_Module->show_packages("0"); //pids your product ids. // 0 last package info
+        print_r($get_packages);die;
+        break;
         
         case 'show_packages':
         echo "<h3>List Packages for barcodes</h3>";
         $get_packages=$FPJA_Module->show_packages("924819810384"); //barcode1,barcode2,barcode3 vs vs.
+        print_r($get_packages);die;
+        break;
+
+        case 'delete_packages':
+        echo "<h3>List Packages for barcodes</h3>";
+        $get_packages=$FPJA_Module->show_packages("924819810384"); //barcode1,barcode2,barcode3 vs vs. Only package status:1 waiting (bekliyor)
         print_r($get_packages);die;
         break;
         
@@ -37,6 +55,7 @@ switch ($process) {
         /*
         Required Parameters
         ---------------------
+        c_pid //customer product id
         product_price
         recipient_fname
         recipient_phone
@@ -48,6 +67,7 @@ switch ($process) {
         cargo_type
         */
         $package_arr=[
+            "c_pid"=>null //customer product id
             "product_name"=>"test product",
             "product_price"=>"100,00", // 100,00 or 100.00 or 10000 | (For 100TL)
             "recipient_fname"=>"lorem ipsum",
@@ -75,4 +95,23 @@ switch ($process) {
         break;
         
 }
+/*
+Paket Durumları
+1:Bekliyor
+2:Kargo Girişi Yapıldı
+3:Kargo Kaydı Bekliyor
+4:Kargo Girişi Yapıldı -API
+5:Dağıtıma Çıkarıldı
+6:Tekrar Dağıtıma Çıkarılacak
+7:İade Talep Edildi
+8:Değişim Talep Edildi
+9:Yolda
+10:Şubede
+11:Teslimat Yapıldı
+12:İade Edildi
+13:Aktarmada
+14:Dağıtım Şubesinde
+15:Değişim-İade Edildi
+16:Şubede Bekliyor
+*/
 ?>
