@@ -3,7 +3,7 @@ include_once("FPJA_Module.php");
 $API_INFORMATION_ARR=[ //DEFAULT VALUES=DEMO
     "PRIVATE_KEY"=>"1111111111111111",
     "PUBLIC_KEY"=>"2222222222222222",
-    "API_URL"=>"https://fastfoxdemo.foxdim.com/Apps/1/PublicApi/Firma/Rest/Api.php",
+    "API_URL"=>"https://demo.fastfoxapp.cc/Panel/Api/PublicApi/Firma/Rest/Api.php",
     "EXPIRED_SEC"=>300,
     ];
 $FPJA_Module = new FPJA_FF_API();     
