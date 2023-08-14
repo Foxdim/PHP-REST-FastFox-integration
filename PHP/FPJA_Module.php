@@ -1,5 +1,5 @@
 <?php 
-class FPJA {
+class FPJA_FF_API {
     private $KEY_ARR=[
         "PRIVATE_KEY"=>"1111111111111111",
         "PUBLIC_KEY"=> "2222222222222222",
