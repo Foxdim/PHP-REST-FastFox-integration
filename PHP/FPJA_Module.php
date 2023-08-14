@@ -5,6 +5,7 @@ class FPJA {
         "PUBLIC_KEY"=> "2222222222222222",
         "CIPHERING"=>"AES-128-CBC",
         "EXPIRED_SEC"=>300,
+	"API_URL"=>"",
     ];
     public $FPJA_POST=null;
     function __construct() {
@@ -32,7 +33,45 @@ class FPJA {
         }
         return $hook;
     }
+    function show_packages($barcodes) //barcode1,barcode2,barcode3 vs vs.
+    {
+        $KEY_ARR=$this->KEY_ARR;
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"show_packages","BARCODES"=>$barcodes]]];
+        $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
+        $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
+        $FPJA_decode=$this->FPJA_decode($response_FPJA);
+        return $FPJA_decode;
+    }
     
+    function show_last_packages($limit=5) //max 1000 packages
+    {
+        $KEY_ARR=$this->KEY_ARR;
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"show_last_packages","LIMIT"=>$limit]]];
+        $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
+        $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
+        $FPJA_decode=$this->FPJA_decode($response_FPJA);
+        return $FPJA_decode;
+    }
+    function create_package($package_arr)
+    {
+        
+        $KEY_ARR=$this->KEY_ARR;
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"create_package","PACKAGE"=>$package_arr]]];
+        $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
+        $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
+        $FPJA_decode=$this->FPJA_decode($response_FPJA);
+        return $FPJA_decode;
+        
+    }
+    function delete_packages($barcodes)
+    {
+        $KEY_ARR=$this->KEY_ARR;
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"delete_packages","BARCODES"=>$barcodes]]];
+        $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
+        $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
+        $FPJA_decode=$this->FPJA_decode($response_FPJA);
+        return $FPJA_decode;
+    }
   
     function FPJA_exit($arr)
     {
