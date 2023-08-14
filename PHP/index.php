@@ -70,7 +70,7 @@ switch ($process) {
         cargo_type
         */
         $package_arr=[
-            "c_pid"=>null //customer product id
+            "c_pid"=>null //customer product id | varchar(50)
             "product_name"=>"test product",
             "product_price"=>"100,00", // 100,00 or 100.00 or 10000 | (For 100TL)
             "recipient_fname"=>"lorem ipsum",
