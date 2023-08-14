@@ -33,6 +33,25 @@ class FPJA_FF_API {
         }
         return $hook;
     }
+    function pid_show_packages($pids) //pid numbers pid1,pid2,pid3
+    {
+        $KEY_ARR=$this->KEY_ARR;
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"pid_show_packages","PIDS"=>$pids]]];
+        $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
+        $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
+        $FPJA_decode=$this->FPJA_decode($response_FPJA);
+        return $FPJA_decode;
+    }
+    function delete_packages($pids)//pid numbers pid1,pid2,pid3
+    {
+        $KEY_ARR=$this->KEY_ARR;
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"delete_packages","PIDS"=>$pids]]];
+        $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
+        $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
+        $FPJA_decode=$this->FPJA_decode($response_FPJA);
+        return $FPJA_decode;
+    }
+	
     function show_packages($barcodes) //barcode1,barcode2,barcode3 vs vs.
     {
         $KEY_ARR=$this->KEY_ARR;
