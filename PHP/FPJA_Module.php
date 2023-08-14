@@ -5,7 +5,7 @@ class FPJA_FF_API {
         "PUBLIC_KEY"=> "2222222222222222",
         "CIPHERING"=>"AES-128-CBC",
         "EXPIRED_SEC"=>300,
-	"API_URL"=>"",
+	    "API_URL"=>"",
     ];
     public $FPJA_POST=null;
     function __construct() {
@@ -33,6 +33,26 @@ class FPJA_FF_API {
         }
         return $hook;
     }
+     function test_connection()
+    {
+        $KEY_ARR=$this->KEY_ARR;
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"test_connection"]]];
+        $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
+        $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
+        $FPJA_decode=$this->FPJA_decode($response_FPJA);
+       /* echo($this->jsonEncode($PAYLOAD_ARR));
+        echo "<hr>";
+        echo($this->jsonEncode($this->FPJA_decode($FPJA))); //şifresiz
+        echo "<hr>";
+        echo($FPJA);//şifreli
+        echo "<hr><hr><hr>";
+        echo($response_FPJA);
+        echo "<hr>";
+        echo($this->jsonEncode($FPJA_decode));
+        echo "<hr>";die;*/
+        
+        return $response_FPJA;
+    }
     function pid_show_packages($pids) //pid numbers pid1,pid2,pid3
     {
         $KEY_ARR=$this->KEY_ARR;
@@ -42,7 +62,7 @@ class FPJA_FF_API {
         $FPJA_decode=$this->FPJA_decode($response_FPJA);
         return $FPJA_decode;
     }
-    function delete_packages($pids)//pid numbers pid1,pid2,pid3
+    function pid_delete_packages($pids)//pid numbers pid1,pid2,pid3
     {
         $KEY_ARR=$this->KEY_ARR;
         $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"delete_packages","PIDS"=>$pids]]];
@@ -246,6 +266,45 @@ class FPJA_FF_API {
     }
     function Api_Request($URL,$POST_STRING=null,$ASYNC=false,$HEADER_ARR=null,$IP=null)
     {
+        if($ASYNC==true)
+        return Api_Request_ASYNC($URL,$POST_STRING,$ASYNC,$HEADER_ARR,$IP);
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,$URL);
+        $PACKAGE_HEADERS = [
+        'User-Agent: FASTFOX-API',
+        'Content-Type: application/json;charset=utf-8',
+        'Connection: Close',
+        ];
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $PACKAGE_HEADERS);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch,CURLOPT_TIMEOUT,60);
+        curl_setopt($ch, CURLOPT_HEADER, true);
+
+        if(strlen($POST_STRING)>=1){
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,
+                    $POST_STRING);
+        }
+        
+        // In real life you should use something like:
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, 
+        //          http_build_query(array('postvar1' => 'value1')));
+        
+        // Receive server response ...
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $server_output = curl_exec($ch);
+        list($headers, $body) = explode("\r\n\r\n", $server_output, 2);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if($httpcode=="200") return $body;
+        return ["STATUS"=>"FAIL"];
+        
+        
+    }
+    
+    function Api_Request_ASYNC($URL,$POST_STRING=null,$ASYNC=true,$HEADER_ARR=null,$IP=null)
+    {
     $PACKAGE_STRING="";
     $parts=parse_url($URL); $xhost=null; $xip=$IP; $xport=80;
     if(!in_array($parts["scheme"],["http","https"]))return ["STATUS" => "FAIL"];
@@ -271,7 +330,7 @@ class FPJA_FF_API {
 
 	$Request_type="GET";
 	if($POST_STRING!=null){$Request_type="POST";
-	    if(!is_string($POST_STRING))$POST_STRING=$this->json_encode($POST_STRING);
+	    if(!is_string($POST_STRING))$POST_STRING=$this->jsonEncode($POST_STRING);
 	}
 	
     $fp = fsockopen($xhost,$xport,$errno, $errstr, 30);
@@ -281,7 +340,7 @@ class FPJA_FF_API {
     {
         $PACKAGE_STRING.= $header."\r\n";
     }
-	if($POST_STRING!=null){$PACKAGE_STRING.= "Content-Length: ".strlen($POST_STRING)."\r\n";}
+	if($POST_STRING!=null){$PACKAGE_STRING.= "Content-Length: ".mb_strlen($POST_STRING, '8bit')."\r\n";}
     $PACKAGE_STRING.= "\r\n";
 	$PACKAGE_STRING.= $POST_STRING;
     fwrite($fp, $PACKAGE_STRING);
@@ -293,6 +352,7 @@ class FPJA_FF_API {
 		$response .= fgets($fp, 8192);
 	}
 	fclose($fp);
+    var_dump($response);die;
 	list($headers, $body) = explode("\r\n\r\n", $response, 2);
     $header_lines = explode("\r\n", $headers);
 
