@@ -1,4 +1,5 @@
 <?php 
+
 include_once("FPJA_Module.php");
 $API_INFORMATION_ARR=[ //DEFAULT VALUES=DEMO
     "PRIVATE_KEY"=>"1111111111111111",
@@ -7,7 +8,7 @@ $API_INFORMATION_ARR=[ //DEFAULT VALUES=DEMO
     "EXPIRED_SEC"=>300,
     ];
 $FPJA_Module = new FPJA_FF_API();     
-$FPJA->SETUP_ARR($API_INFORMATION_ARR);
+$FPJA_Module->SETUP_ARR($API_INFORMATION_ARR);
 
 
 $process=$_GET["process"]??"test_connection";
@@ -73,7 +74,7 @@ switch ($process) {
         cargo_type
         */
         $package_arr=[
-            "c_pid"=>null //customer product id | varchar(50)
+            "c_pid"=>null, //customer product id | varchar(50)
             "product_name"=>"test product",
             "product_price"=>"100,00", // 100,00 or 100.00 or 10000 | (For 100TL)
             "recipient_fname"=>"lorem ipsum",
