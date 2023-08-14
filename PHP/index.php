@@ -22,7 +22,7 @@ switch ($process) {
         
         case 'show_packages':
         echo "<h3>List Packages for barcodes</h3>";
-        $get_packages=$FPJA_Module->show_packages("924819810384");
+        $get_packages=$FPJA_Module->show_packages("924819810384"); ////barcode1,barcode2,barcode3 vs vs.
         print_r($get_packages);die;
         break;
         
