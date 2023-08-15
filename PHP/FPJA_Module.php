@@ -267,7 +267,7 @@ class FPJA_FF_API {
     function Api_Request($URL,$POST_STRING=null,$ASYNC=false,$HEADER_ARR=null,$IP=null)
     {
         if($ASYNC==true)
-        return Api_Request_ASYNC($URL,$POST_STRING,$ASYNC,$HEADER_ARR,$IP);
+        return $tihs->Api_Request_ASYNC($URL,$POST_STRING,$ASYNC,$HEADER_ARR,$IP);
         
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,$URL);
