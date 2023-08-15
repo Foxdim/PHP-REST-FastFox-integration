@@ -29,13 +29,13 @@ switch ($process) {
 
         case 'pk_show_packages':
         echo "<h3>List Packages for product keys</h3>";
-        $get_packages=$FPJA_Module->pk_show_packages("1112,111"); //pk numbers pk1,pk2,pk3  pk your product keys. // 0 last package info
+        $get_packages=$FPJA_Module->pk_show_packages("11111111"); //pk numbers pk1,pk2,pk3  pk your product keys. // 0 last package info
         print_r($get_packages);die;
         break;
 
         case 'pk_delete_packages':
         echo "<h3>Canceled Packages for product keys</h3>";
-        $get_packages=$FPJA_Module->pk_delete_packages("1112"); //pk numbers pk1,pk2,pk3  pk your product keys. // 0 last package info
+        $get_packages=$FPJA_Module->pk_delete_packages("11111111"); //pk numbers pk1,pk2,pk3  pk your product keys. // 0 last package info
         print_r($get_packages);die;
         break;
         
