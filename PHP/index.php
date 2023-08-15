@@ -107,7 +107,7 @@ switch ($process) {
         
 }
 /*
-Paket Durumları
+// Package Status //
 1:Bekliyor
 2:Kargo Girişi Yapıldı
 3:Kargo Kaydı Bekliyor
@@ -125,5 +125,21 @@ Paket Durumları
 15:Değişim-İade Edildi
 16:Şubede Bekliyor
 -1:İptal Edildi
+
+// Cargo Types //
+1:Gönderici Ödemeli
+2:Alıcı Ödemeli
+
+// Payment Types //
+1:Kapıda Kredi Kartı
+2:Kapıda Kredi Kartı
+3:Tahsilatsız
+4:Sanal Ödeme
+
+// Shipment Types //
+1:Normal Gönderi
+2:Express Gönderi
+3:Aynı Gün Teslimatlı Gönderi
+4:Aracı Gönderi
 */
 ?>
