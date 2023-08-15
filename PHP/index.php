@@ -12,8 +12,8 @@ $FPJA_Module->SETUP_ARR($API_INFORMATION_ARR);
 
 
 $process=$_GET["process"]??"test_connection";
-//$process="pid_show_packages";
-//$process="pid_delete_packages";
+//$process="pk_show_packages";
+//$process="pk_delete_packages";
 //$process="show_packages";
 //$process="show_last_packages";
 //$process="delete_packages";
@@ -27,15 +27,15 @@ switch ($process) {
         print_r($testconnection);die;
         break;
 
-        case 'pid_show_packages':
+        case 'pk_show_packages':
         echo "<h3>List Packages for barcodes</h3>";
-        $get_packages=$FPJA_Module->pid_show_packages("0"); //pids your product ids. // 0 last package info
+        $get_packages=$FPJA_Module->pk_show_packages("0"); //pk numbers pk1,pk2,pk3  pk your product keys. // 0 last package info
         print_r($get_packages);die;
         break;
 
-        case 'pid_delete_packages':
+        case 'pk_delete_packages':
         echo "<h3>List Packages for barcodes</h3>";
-        $get_packages=$FPJA_Module->pid_delete_packages("0"); //pids your product ids. // 0 last package info
+        $get_packages=$FPJA_Module->pk_delete_packages("0"); //pk numbers pk1,pk2,pk3  pk your product keys. // 0 last package info
         print_r($get_packages);die;
         break;
         
@@ -47,7 +47,7 @@ switch ($process) {
 
         case 'delete_packages':
         echo "<h3>List Packages for barcodes</h3>";
-        $get_packages=$FPJA_Module->show_packages("924819810384"); //barcode1,barcode2,barcode3 vs vs. Only package status:1 waiting (bekliyor)
+        $get_packages=$FPJA_Module->delete_packages("924819810384"); //barcode1,barcode2,barcode3 vs vs. Only package status:1 waiting (bekliyor)
         print_r($get_packages);die;
         break;
         
@@ -74,7 +74,7 @@ switch ($process) {
         cargo_type
         */
         $package_arr=[
-            "c_pid"=>null, //customer product id | varchar(50)
+            "product_key"=>"0", //default:0 or null | customer product key-barcode | varchar(50)
             "product_price"=>"100,00", // 100,00 or 100.00 or 10000 | (For 100TL)
             "product_name"=>"test product", //(varchar(255))
             "recipient_fname"=>"lorem ipsum", //(varchar(100))
@@ -124,5 +124,6 @@ Paket Durumları
 14:Dağıtım Şubesinde
 15:Değişim-İade Edildi
 16:Şubede Bekliyor
+-1:İptal Edildi
 */
 ?>
