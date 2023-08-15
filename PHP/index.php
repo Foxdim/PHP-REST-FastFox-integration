@@ -28,14 +28,14 @@ switch ($process) {
         break;
 
         case 'pk_show_packages':
-        echo "<h3>List Packages for barcodes</h3>";
-        $get_packages=$FPJA_Module->pk_show_packages("0"); //pk numbers pk1,pk2,pk3  pk your product keys. // 0 last package info
+        echo "<h3>List Packages for product keys</h3>";
+        $get_packages=$FPJA_Module->pk_show_packages("1112,111"); //pk numbers pk1,pk2,pk3  pk your product keys. // 0 last package info
         print_r($get_packages);die;
         break;
 
         case 'pk_delete_packages':
-        echo "<h3>List Packages for barcodes</h3>";
-        $get_packages=$FPJA_Module->pk_delete_packages("0"); //pk numbers pk1,pk2,pk3  pk your product keys. // 0 last package info
+        echo "<h3>Canceled Packages for product keys</h3>";
+        $get_packages=$FPJA_Module->pk_delete_packages("1112"); //pk numbers pk1,pk2,pk3  pk your product keys. // 0 last package info
         print_r($get_packages);die;
         break;
         
@@ -46,8 +46,8 @@ switch ($process) {
         break;
 
         case 'delete_packages':
-        echo "<h3>List Packages for barcodes</h3>";
-        $get_packages=$FPJA_Module->delete_packages("924819810384"); //barcode1,barcode2,barcode3 vs vs. Only package status:1 waiting (bekliyor)
+        echo "<h3>Canceled Packages for barcodes</h3>";
+        $get_packages=$FPJA_Module->show_packages("924819810384"); //barcode1,barcode2,barcode3 vs vs. Only package status:1 waiting (bekliyor)
         print_r($get_packages);die;
         break;
         
@@ -62,7 +62,7 @@ switch ($process) {
         /*
         Required Parameters
         ---------------------
-        c_pid //customer product id
+        product_key //product key your barcode or order number or a custom id 1 can be defined for each package.
         product_price
         recipient_fname
         recipient_phone
@@ -74,7 +74,7 @@ switch ($process) {
         cargo_type
         */
         $package_arr=[
-            "product_key"=>"0", //default:0 or null | customer product key-barcode | varchar(50)
+            "product_key"=>"1112", //default:null | customer product key-barcode | varchar(50)
             "product_price"=>"100,00", // 100,00 or 100.00 or 10000 | (For 100TL)
             "product_name"=>"test product", //(varchar(255))
             "recipient_fname"=>"lorem ipsum", //(varchar(100))
