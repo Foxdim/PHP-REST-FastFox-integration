@@ -75,21 +75,25 @@ switch ($process) {
         */
         $package_arr=[
             "c_pid"=>null, //customer product id | varchar(50)
-            "product_name"=>"test product",
             "product_price"=>"100,00", // 100,00 or 100.00 or 10000 | (For 100TL)
-            "recipient_fname"=>"lorem ipsum",
-            "recipient_identification"=>"00000000000", //11 Length or null default=00000000000
-            "recipient_phone"=>"0000000000",//5xxxxxxxxx 10 Length
-            "recipient_mail"=>"info.foxdim@gmail.com",
-            "recipient_country"=>"TR",
-            "recipient_province"=>"İSTANBUL",//The system does not allow typos.
-            "recipient_district"=>"MALTEPE",
-            "recipient_address"=>"lorem ipsum cad. lorem ipsum sk. no:1 d:1",
-            "recipient_address_description"=>"",//detailed address description
-            "package_weight"=>"0",
-            "package_deci"=>"0",//default =0
-            "payment_type"=>"1",//1=Credit card | 2=Cash payment | 3=Without payment
-            "cargo_type"=>"1",  //1=Sender pay  | 2=Buyer pay
+            "product_name"=>"test product", //(varchar(255))
+            "recipient_fname"=>"lorem ipsum", //(varchar(100))
+            "recipient_identification"=>"00000000000", //11 Length or null default=00000000000 (varchar(30))
+            "recipient_phone"=>"0000000000",//5xxxxxxxxx 10 Length //(varchar(15))
+            "recipient_mail"=>"info.foxdim@gmail.com", //(varchar(255))
+            "recipient_country"=>"TR", //varchar(2)
+            "recipient_province"=>"İSTANBUL",//The system does not allow typos. (varchar(255))
+            "recipient_district"=>"MALTEPE", //(varchar(255))
+            "recipient_address"=>"lorem ipsum cad. lorem ipsum sk. no:1 d:1", //(varchar(255))
+            "recipient_address_description"=>"",//detailed address description (text)
+            "package_weight"=>"0", //(int)
+            "package_deci"=>"0",//default =0 (tinyint)
+            "payment_type"=>"1",//1=Credit card | 2=Cash payment | 3=Without payment (tinyint)
+            "cargo_type"=>"1",  //1=Sender pay  | 2=Buyer pay (tinyint)
+            "private_text_1"=>null, //It is used if the cargo company needs it. (varchar(150))
+            "private_text_2"=>null, //It is used if the cargo company needs it. (varchar(150))
+            "private_text_3"=>null, //It is used if the cargo company needs it. (varchar(150))
+            "private_text_4"=>null  //It is used if the cargo company needs it. (varchar(150))
             ];
         $created_package=$FPJA_Module->create_package($package_arr);
         print_r($created_package);die;
