@@ -53,19 +53,19 @@ class FPJA_FF_API {
         
         return $response_FPJA;
     }
-    function pid_show_packages($pids) //pid numbers pid1,pid2,pid3
+    function pk_show_packages($PKS) //pk numbers pk1,pk2,pk3
     {
         $KEY_ARR=$this->KEY_ARR;
-        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"pid_show_packages","PIDS"=>$pids]]];
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"pk_show_packages","PKS"=>$PKS]]];
         $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
         $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
         $FPJA_decode=$this->FPJA_decode($response_FPJA);
         return $FPJA_decode;
     }
-    function pid_delete_packages($pids)//pid numbers pid1,pid2,pid3
+    function pk_delete_packages($PKS)//pk numbers pk1,pk2,pk3
     {
         $KEY_ARR=$this->KEY_ARR;
-        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"delete_packages","PIDS"=>$pids]]];
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"pk_delete_packages","PKS"=>$PKS]]];
         $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
         $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
         $FPJA_decode=$this->FPJA_decode($response_FPJA);
@@ -297,6 +297,7 @@ class FPJA_FF_API {
         list($headers, $body) = explode("\r\n\r\n", $server_output, 2);
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
+       // var_dump($server_output);
         if($httpcode=="200") return $body;
         return ["STATUS"=>"FAIL"];
         
