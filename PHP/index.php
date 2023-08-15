@@ -29,13 +29,13 @@ switch ($process) {
 
         case 'pid_show_packages':
         echo "<h3>List Packages for barcodes</h3>";
-        $get_packages=$FPJA_Module->show_packages("0"); //pids your product ids. // 0 last package info
+        $get_packages=$FPJA_Module->pid_show_packages("0"); //pids your product ids. // 0 last package info
         print_r($get_packages);die;
         break;
 
         case 'pid_delete_packages':
         echo "<h3>List Packages for barcodes</h3>";
-        $get_packages=$FPJA_Module->show_packages("0"); //pids your product ids. // 0 last package info
+        $get_packages=$FPJA_Module->pid_delete_packages("0"); //pids your product ids. // 0 last package info
         print_r($get_packages);die;
         break;
         
