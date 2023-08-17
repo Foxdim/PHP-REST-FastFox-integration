@@ -12,8 +12,8 @@ $FPJA_Module->SETUP_ARR($API_INFORMATION_ARR);
 
 
 $process=$_GET["process"]??"test_connection";
-//$process="pk_show_packages";
-//$process="pk_delete_packages";
+//$process="order_show_packages";
+//$process="order_delete_packages";
 //$process="show_packages";
 //$process="show_last_packages";
 //$process="delete_packages";
@@ -27,15 +27,15 @@ switch ($process) {
         print_r($testconnection);die;
         break;
 
-        case 'pk_show_packages':
+        case 'order_show_packages':
         echo "<h3>List Packages for product keys</h3>";
-        $get_packages=$FPJA_Module->pk_show_packages("11111111"); //pk numbers pk1,pk2,pk3  pk your product keys. // 0 last package info
+        $get_packages=$FPJA_Module->order_show_packages("11111111"); //pk numbers pk1,pk2,pk3  pk your product keys. // 0 last package info
         print_r($get_packages);die;
         break;
 
-        case 'pk_delete_packages':
+        case 'order_delete_packages':
         echo "<h3>Canceled Packages for product keys</h3>";
-        $get_packages=$FPJA_Module->pk_delete_packages("11111111"); //pk numbers pk1,pk2,pk3  pk your product keys. // 0 last package info
+        $get_packages=$FPJA_Module->order_delete_packages("11111111"); //pk numbers pk1,pk2,pk3  pk your product keys. // 0 last package info
         print_r($get_packages);die;
         break;
         
