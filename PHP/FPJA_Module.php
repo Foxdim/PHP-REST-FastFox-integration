@@ -5,7 +5,7 @@ class FPJA_FF_API {
         "PUBLIC_KEY"=> "2222222222222222",
         "CIPHERING"=>"AES-128-CBC",
         "EXPIRED_SEC"=>300,
-	    "API_URL"=>"",
+	"API_URL"=>"",
     ];
     public $FPJA_POST=null;
     function __construct() {
@@ -53,19 +53,19 @@ class FPJA_FF_API {
         
         return $response_FPJA;
     }
-    function pk_show_packages($PKS) //pk numbers pk1,pk2,pk3
+    function order_show_packages($orderKeys) //pk numbers pk1,pk2,pk3
     {
         $KEY_ARR=$this->KEY_ARR;
-        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"pk_show_packages","PKS"=>$PKS]]];
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"order_show_packages","orderKeys"=>$orderKeys]]];
         $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
         $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
         $FPJA_decode=$this->FPJA_decode($response_FPJA);
         return $FPJA_decode;
     }
-    function pk_delete_packages($PKS)//pk numbers pk1,pk2,pk3
+    function order_delete_packages($orderKeys)//pk numbers pk1,pk2,pk3
     {
         $KEY_ARR=$this->KEY_ARR;
-        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"pk_delete_packages","PKS"=>$PKS]]];
+        $PAYLOAD_ARR=["FPJA"=>["PAYLOAD"=>["REQUEST"=>"order_delete_packages","orderKeys"=>$orderKeys]]];
         $FPJA=$this->FPJA_encode($PAYLOAD_ARR);
         $response_FPJA=$this->Api_Request($KEY_ARR["API_URL"],$FPJA);
         $FPJA_decode=$this->FPJA_decode($response_FPJA);
